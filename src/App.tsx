@@ -30,6 +30,7 @@ import {
 } from 'react-router-dom'
 import { useEffect, useState, type ReactNode } from 'react'
 import type { Language } from '../shared/learner-state'
+import { AssistantWidget } from './AssistantWidget'
 import { getCopy, lessonSteps } from './content'
 import { LearnerProvider } from './LearnerProvider'
 import { useLearner } from './learner-context'
@@ -101,6 +102,7 @@ function AppLayout() {
         </Routes>
       </main>
       <Footer />
+      <AssistantWidget />
     </div>
   )
 }

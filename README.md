@@ -1,6 +1,6 @@
-# Saathi
+﻿# Saathi
 
-Saathi is a bilingual, mobile-first learning companion. Its first lesson teaches people to join and safely end a family video call in a clearly labelled simulation. The lesson never places a real call or accesses real contacts, a camera, or a microphone.
+Saathi is a bilingual, mobile-first learning companion. Its first lesson teaches people to join and safely end a family video call in a clearly labelled simulation. The simulation never places a real call or accesses real contacts, a camera, or a microphone. The optional voice assistant asks the browser to transcribe speech only after the learner taps its microphone button.
 
 ## Run locally
 
@@ -21,9 +21,24 @@ npm start
 
 ## Voice guidance
 
-English guidance uses the browser's installed English speech voice. Urdu Listen and Repeat controls use Microsoft Edge's online Read Aloud service with its `ur-IN-GulNeural` voice. It does not require an Azure Speech resource, account, or key, and does not depend on an Urdu voice being installed on the learner's device.
+English guidance uses the browser's installed English speech voice. Urdu Listen and Repeat controls and spoken assistant replies use Microsoft Edge's online Read Aloud service with its `ur-IN-GulNeural` voice. This does not require an Azure Speech resource, account, or key, and does not depend on an Urdu voice being installed on the learner's device.
 
-Urdu playback requires an internet connection. The app sends only the selected, fixed Urdu lesson instruction to Microsoft's online speech service; learner progress and personal data are not included. This uses the Edge Read Aloud service through the community `node-edge-tts` client, not a supported Azure Speech API, so availability and terms may change. No speech-service credentials or payment setup are required.
+Urdu playback requires an internet connection. The selected fixed lesson instruction, or an assistant reply only when you choose to read it aloud, is sent to Microsoft's online speech service. This uses the Edge Read Aloud service through the community `node-edge-tts` client, not a supported Azure Speech API, so availability and terms may change. No speech-service credentials or payment setup are required.
+
+## Saathi assistant
+
+The assistant is available throughout the app. It receives the question, selected language, current page and lesson step, plus up to eight recent turns in the current tab. The chat is not saved with learner progress. Do not enter passwords, phone numbers, or private contact details. If you use microphone dictation, speech recognition is provided by the browser and may process audio under that browser's own terms; review the transcript before sending.
+
+The chat uses GroqCloud. Create a key in [Groq Console](https://console.groq.com/keys) and configure it on the server; never add it to frontend code or commit it:
+
+```powershell
+$env:GROQ_API_KEY = "<your Groq API key>"
+# Optional: the default model is openai/gpt-oss-20b.
+$env:GROQ_MODEL = "openai/gpt-oss-20b"
+npm run dev
+```
+
+In deployment, set `GROQ_API_KEY` as a server-side secret. Groq account limits, plan eligibility, billing, and data terms depend on your account and may change; verify them before deployment. Without the key, the assistant stays visible but explains that it is not configured.
 
 ## Progress storage
 

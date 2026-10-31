@@ -2,12 +2,23 @@ import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import express from 'express'
 import { isLearnerState } from '../shared/learner-state.js'
+import {
+  AssistantServiceError,
+  getGroqConfig,
+  getAssistantReply,
+  isAssistantRequest,
+} from './assistant.js'
 import { createLearnerDatabase } from './database.js'
-import { getUrduSpeechAudio } from './speech.js'
+import { createRateLimit } from './rate-limit.js'
+import { getAssistantSpeechAudio, getUrduSpeechAudio } from './speech.js'
 
 const database = await createLearnerDatabase()
 const app = express()
 const port = Number(process.env.PORT ?? 3001)
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
 
 if (!Number.isInteger(port) || port < 1 || port > 65535) {
   throw new Error('PORT must be a valid TCP port number.')
@@ -21,6 +32,30 @@ app.get('/api/health', (_request, response) => {
 
 app.get('/api/speech/status', (_request, response) => {
   response.json({ available: true })
+})
+
+app.get('/api/assistant/status', (_request, response) => {
+  response.json({ available: getGroqConfig() !== null })
+})
+
+app.post('/api/assistant/chat', createRateLimit(8, 60_000), async (request, response) => {
+  const body: unknown = request.body
+  if (!isAssistantRequest(body)) {
+    response.status(400).json({ error: 'Send a message and a valid current app context.' })
+    return
+  }
+
+  try {
+    const reply = await getAssistantReply(body)
+    response.json({ reply })
+  } catch (error) {
+    if (error instanceof AssistantServiceError) {
+      response.status(error.status).json({ error: error.message })
+      return
+    }
+    console.error('Groq assistant request failed:', error)
+    response.status(502).json({ error: 'The assistant could not answer right now.' })
+  }
 })
 
 app.get('/api/speech/ur/:step', async (request, response) => {
@@ -41,6 +76,28 @@ app.get('/api/speech/ur/:step', async (request, response) => {
     console.error('Edge Urdu speech request failed:', error)
     response.status(502).json({
       error: 'Urdu voice playback could not be prepared. Please try again.',
+    })
+  }
+})
+
+app.post('/api/speech/assistant', createRateLimit(12, 60_000), async (request, response) => {
+  const text: unknown = isRecord(request.body) ? request.body.text : undefined
+  if (typeof text !== 'string' || !text.trim() || text.length > 600) {
+    response.status(400).json({ error: 'Provide a reply of 600 characters or fewer.' })
+    return
+  }
+
+  try {
+    const audio = await getAssistantSpeechAudio(text.trim())
+    response
+      .status(200)
+      .set('Cache-Control', 'no-store')
+      .type('audio/mpeg')
+      .send(audio)
+  } catch (error) {
+    console.error('Edge assistant speech request failed:', error)
+    response.status(502).json({
+      error: 'The spoken reply could not be prepared. Please read the message instead.',
     })
   }
 })

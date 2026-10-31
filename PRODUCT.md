@@ -29,10 +29,11 @@ The MVP is a mobile-first learning experience for someone practising on a smartp
 ## Capabilities and Constraints
 
 - The video-call lesson simulates opening a calling app, selecting a sample family contact, recognizing the call control, responding to camera and microphone permission prompts, joining, and ending a practice call.
-- Simulation is clearly identified as practice. It must not place calls, connect to WhatsApp, request real contacts, or access private information.
+- Simulation is clearly identified as practice. It must not place calls, connect to WhatsApp, use real contacts, or access a real camera or microphone. Optional assistant dictation may use browser speech recognition only after an explicit user action; Saathi must not store audio.
 - Instructions support English and Urdu, with proper right-to-left layout in Urdu. Voice guidance uses browser speech synthesis when available and is never required.
+- A global bilingual help assistant can use the current app page and lesson step to offer guidance. Groq access is optional and requires a server-side key; provider usage is subject to account limits, billing, and data terms. Chat must not control the learner's device or request private details.
 - Persist selected language, lesson progress/completion, confidence ratings, and accessibility preferences. The confirmed backend is Node/Express with SQLite.
-- No registration, payment, real-world messaging, or unnecessary infrastructure.
+- No registration or real-world messaging. Keep hosted AI optional, disclose provider data handling, and avoid unnecessary infrastructure.
 - Every visible control must work; the application must remain usable on mobile, keyboard, and assistive technology.
 
 ## Brand Commitments

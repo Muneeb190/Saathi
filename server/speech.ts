@@ -67,3 +67,23 @@ export function getUrduSpeechAudio(
     },
   )
 }
+
+export async function getAssistantSpeechAudio(text: string): Promise<Buffer> {
+  const client = new EdgeTTS({
+    voice: voiceName,
+    lang: 'ur-IN',
+    outputFormat: 'audio-24khz-48kbitrate-mono-mp3',
+    timeout: 20000,
+  })
+  const chunks: Buffer[] = []
+  for await (const chunk of client.streamAudio(text)) {
+    if (!Buffer.isBuffer(chunk)) {
+      throw new Error('Edge TTS returned unexpected subtitle metadata.')
+    }
+    chunks.push(chunk)
+  }
+
+  const audio = Buffer.concat(chunks)
+  if (audio.length === 0) throw new Error('Edge TTS returned an empty audio clip.')
+  return audio
+}
