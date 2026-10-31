@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-31T13:39:37+05:00",
+  "title": "Design System: Saathi",
+  "extensions": {
+    "colorMeta": {
+      "warm-ivory": {
+        "role": "neutral",
+        "displayName": "Warm Ivory",
+        "canonical": "#FFF9F0",
+        "tonalRamp": ["#392B1E", "#584434", "#775D48", "#967D66", "#B59D85", "#D4BD9F", "#E8D8C0", "#FFF9F0"]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#202A27", "#36413D", "#505B57", "#6C7773", "#8B9691", "#ADB7B2", "#D2DAD6", "#FFFFFF"]
+      },
+      "deep-teal": {
+        "role": "primary",
+        "displayName": "Deep Teal",
+        "canonical": "#174F4B",
+        "tonalRamp": ["#0B2927", "#103936", "#174F4B", "#286C66", "#4A8881", "#79A49B", "#B2CEC2", "#E6F3E9"]
+      },
+      "deep-teal-hover": {
+        "role": "primary",
+        "displayName": "Deep Teal Hover",
+        "canonical": "#123D3A",
+        "tonalRamp": ["#091F1E", "#0D302D", "#123D3A", "#24605A", "#47817A", "#76A198", "#B1CCBF", "#E6F2E8"]
+      },
+      "soft-sage": {
+        "role": "secondary",
+        "displayName": "Soft Sage",
+        "canonical": "#DCEBE1",
+        "tonalRamp": ["#20362B", "#385744", "#56745F", "#78927F", "#9BB09F", "#B9CCBD", "#DCEBE1", "#F5FAF5"]
+      },
+      "sage-dark": {
+        "role": "secondary",
+        "displayName": "Sage Dark",
+        "canonical": "#C1D7CA",
+        "tonalRamp": ["#1C3328", "#34533F", "#52715C", "#74907B", "#95AD9C", "#ADC4B5", "#C1D7CA", "#F0F6F1"]
+      },
+      "warm-orange": {
+        "role": "tertiary",
+        "displayName": "Warm Orange",
+        "canonical": "#F2A65A",
+        "tonalRamp": ["#40220A", "#663A12", "#92551F", "#BD7331", "#D88E45", "#E7A65F", "#F2A65A", "#FBE7CF"]
+      },
+      "charcoal": {
+        "role": "neutral",
+        "displayName": "Charcoal",
+        "canonical": "#263238",
+        "tonalRamp": ["#11191D", "#1B252A", "#263238", "#3F4C51", "#5D6A6F", "#7F8B8E", "#AEB8B9", "#F0F3F2"]
+      },
+      "muted-text": {
+        "role": "neutral",
+        "displayName": "Muted Text",
+        "canonical": "#435456",
+        "tonalRamp": ["#1F292A", "#2C393A", "#435456", "#5C6E70", "#7A8C8D", "#A0B0B0", "#C8D2D0", "#F1F4F2"]
+      },
+      "sage-divider": {
+        "role": "neutral",
+        "displayName": "Sage Divider",
+        "canonical": "#C7D9CE",
+        "tonalRamp": ["#23342B", "#3D5547", "#5D7466", "#7C9184", "#9BAFA2", "#B2C4B7", "#C7D9CE", "#F2F7F3"]
+      },
+      "promise-surface": {
+        "role": "neutral",
+        "displayName": "Promise Surface",
+        "canonical": "#F5F8F2",
+        "tonalRamp": ["#28372A", "#40543F", "#5D725B", "#7F927D", "#A1B2A0", "#C3CEC0", "#DFE7DB", "#F5F8F2"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Large desktop landing headline; Urdu uses the page's Nastaliq override."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Lesson and page headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Supporting section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Readable instructions and explanations."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Compact section labels and progress context."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Button text and key interactive labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "illustration-lift",
+        "value": "0 12px 30px rgb(23 79 75 / 10%)",
+        "purpose": "Soft teal-tinted lift for the landing illustration phone and floating annotation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "action-hover",
+        "value": "background-color 180ms ease-out, transform 180ms ease-out",
+        "purpose": "Subtle background darkening and one-pixel lift for the primary action."
+      },
+      {
+        "name": "progress-state",
+        "value": "background-color 250ms ease-out, transform 250ms ease-out",
+        "purpose": "Quiet emphasis as the learner advances through the six-step path."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition-duration: 0.01ms; animation-duration: 0.01ms",
+        "purpose": "Honor the in-app reduced-motion setting and the system preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "680px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The primary next step; bold, high-contrast, and sized for confident tapping.",
+      "html": "<button class=\"ds-btn-primary\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>Continue learning</button>",
+      "css": ".ds-btn-primary { min-height: 58px; padding: 13px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--teal); border-radius: 12px; color: var(--white); background: var(--teal); font: 700 1rem/1.45 \"Noto Sans\", sans-serif; text-align: center; text-decoration: none; transition: background-color 180ms ease-out, transform 180ms ease-out; } .ds-btn-primary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A clear secondary route that stays visually quieter than the lesson action.",
+      "html": "<button class=\"ds-btn-secondary\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22zM4 5.5v14A2.5 2.5 0 0 1 6.5 17H20\"/></svg>Try a practice lesson</button>",
+      "css": ".ds-btn-secondary { min-height: 58px; padding: 13px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--teal); border-radius: 12px; color: var(--teal); background: transparent; font: 700 1rem/1.45 \"Noto Sans\", sans-serif; text-align: center; text-decoration: none; transition: background-color 180ms ease-out; } .ds-btn-secondary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; } .ds-btn-secondary:hover { background: var(--sage); } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); } .ds-btn-secondary:active { background: var(--sage-dark); }"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "text-button",
+      "description": "A quieter inline action for hints, retry, and supporting controls.",
+      "html": "<button class=\"ds-text-button\">Show me a hint</button>",
+      "css": ".ds-text-button { min-height: 44px; padding: 8px 10px; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 9px; color: var(--teal); background: transparent; font: 700 0.9rem/1.45 \"Noto Sans\", sans-serif; text-align: start; } .ds-text-button:hover { background: var(--sage); } .ds-text-button:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); } .ds-text-button:active { background: var(--sage-dark); }"
+    },
+    {
+      "name": "Language Select",
+      "kind": "input",
+      "refersTo": "language-select",
+      "description": "Native language choice with a visible outline and familiar browser behavior.",
+      "html": "<label class=\"ds-language\"><span class=\"ds-language-label\">Language</span><select aria-label=\"Language\"><option>English</option><option>اردو</option></select></label>",
+      "css": ".ds-language { display: inline-flex; align-items: center; } .ds-language-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } .ds-language select { min-height: 44px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--teal); background: transparent; font: 700 0.8rem/1.4 \"Noto Sans\", sans-serif; } .ds-language select:hover { background: var(--sage); } .ds-language select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "description": "A compact, wrapping set of learner destinations that follows page direction.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"#home\">Home</a><a href=\"#learning\">My learning</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; } .ds-nav a { min-height: 44px; padding: 8px 11px; display: inline-flex; align-items: center; border-radius: 10px; color: var(--teal); font: 700 0.82rem/1.4 \"Noto Sans\", sans-serif; text-decoration: none; } .ds-nav a:hover { background: var(--sage); } .ds-nav a:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); }"
+    },
+    {
+      "name": "Workbook Lesson Card",
+      "kind": "card",
+      "refersTo": "mobile-lesson-feature",
+      "description": "The next lesson and its single prominent action, followed by visible progress.",
+      "html": "<article class=\"ds-lesson-card\"><span class=\"ds-lesson-label\">Your next lesson</span><h2>Join a family video call</h2><p>Learn to find a family contact and join a call safely.</p><button class=\"ds-card-action\">Continue learning</button><div class=\"ds-card-progress\"><span>Six small steps</span><strong>1 of 6</strong></div></article>",
+      "css": ".ds-lesson-card { padding: 20px 18px; display: grid; gap: 10px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); } .ds-lesson-label { color: var(--teal); font: 800 0.8rem/1.4 \"Noto Sans\", sans-serif; } .ds-lesson-card h2 { margin: 0; color: var(--teal); font: 700 clamp(1.55rem, 7vw, 1.9rem)/1.2 \"Noto Sans\", sans-serif; } .ds-lesson-card p { margin: 0; color: var(--muted); font: 400 1rem/1.6 \"Noto Sans\", sans-serif; } .ds-card-action { width: 100%; min-height: 58px; padding: 13px 22px; border: 1px solid var(--teal); border-radius: 12px; color: var(--white); background: var(--teal); font: 700 1rem/1.45 \"Noto Sans\", sans-serif; } .ds-card-action:hover { background: var(--teal-dark); } .ds-card-action:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); } .ds-card-progress { margin-top: 5px; padding-top: 15px; display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); color: var(--teal); font: 700 0.8rem/1.4 \"Noto Sans\", sans-serif; }"
+    },
+    {
+      "name": "Six-Step Progress",
+      "kind": "custom",
+      "refersTo": "progress-steps",
+      "description": "Six numbered markers make orientation visible without relying on color alone.",
+      "html": "<ol class=\"ds-progress\" aria-label=\"Step 2 of 6\"><li>1</li><li class=\"ds-complete\">✓</li><li class=\"ds-current\" aria-current=\"step\">3</li><li>4</li><li>5</li><li>6</li></ol>",
+      "css": ".ds-progress { margin: 0; padding: 0; display: flex; justify-content: space-between; gap: 6px; list-style: none; } .ds-progress li { width: 31px; height: 31px; display: grid; place-items: center; flex: none; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); background: var(--paper); font: 700 0.78rem/1 \"Noto Sans\", sans-serif; transition: background-color 250ms ease-out, transform 250ms ease-out; } .ds-progress .ds-complete { border-color: var(--teal); color: var(--white); background: var(--teal); } .ds-progress .ds-current { border: 2px solid var(--teal); color: var(--ink); background: var(--orange); transform: scale(1.08); } .ds-progress li:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); }"
+    },
+    {
+      "name": "Practice Phone",
+      "kind": "custom",
+      "description": "A clearly labelled fictional phone used for safe, step-by-step simulation.",
+      "html": "<section class=\"ds-phone\" aria-label=\"Practice phone\"><div class=\"ds-phone-top\"><span>9:41</span><strong>Practice screen only</strong></div><div class=\"ds-phone-screen\"><h2>Practice contacts</h2><button class=\"ds-phone-contact\"><span class=\"ds-phone-avatar\" aria-hidden=\"true\">A</span>Ammi · sample contact</button><p>These names are examples. No real contacts are used.</p></div><div class=\"ds-phone-bottom\"><span></span></div></section>",
+      "css": ".ds-phone { width: min(100%, 410px); min-height: 650px; padding: 12px; border: 8px solid var(--teal); border-radius: 36px; background: var(--paper); box-shadow: 0 12px 30px rgb(23 79 75 / 10%); } .ds-phone-top { min-height: 26px; display: flex; justify-content: space-between; gap: 8px; color: var(--teal); font: 700 0.75rem/1.4 \"Noto Sans\", sans-serif; } .ds-phone-screen { min-height: 550px; padding: 24px 16px; border-radius: 20px; background: var(--white); } .ds-phone-screen h2 { color: var(--ink); font: 700 1.2rem/1.4 \"Noto Sans\", sans-serif; } .ds-phone-contact { width: 100%; min-height: 58px; padding: 10px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--white); font: 700 0.95rem/1.5 \"Noto Sans\", sans-serif; text-align: start; } .ds-phone-contact:hover { background: var(--sage); } .ds-phone-contact:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--orange); } .ds-phone-avatar { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--teal); background: var(--sage); } .ds-phone-screen p { color: var(--muted); font: 400 0.85rem/1.6 \"Noto Sans\", sans-serif; } .ds-phone-bottom { display: grid; place-items: center; padding-top: 10px; } .ds-phone-bottom span { width: 64px; height: 4px; border-radius: 3px; background: var(--teal); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Wide-Margin Learning Workbook",
+    "overview": "Saathi makes digital learning feel like a calm, well-spaced workbook: warm paper holds the page, deep teal gives the learner a clear next action, and sage margins give progress room to breathe. The system is friendly and practical rather than technical; large readable type, clear labels, and generous touch-sized controls make every step feel approachable.\n\nOn the shipped desktop home screen, a broad two-column lesson introduction balances copy with a drawn practice-phone scene, then resolves into three benefit columns and a quiet safety promise. At 390px, the Urdu experience switches to right-to-left Nastaliq and replaces that desktop hero with a stacked welcome and prominent lesson card; its full-width continue action and six-step path stay together in the first viewport. Across the lesson flow, the current instruction and its labelled fictional-phone action remain distinct but connected, and mistakes receive reassuring, actionable recovery.",
+    "keyCharacteristics": [
+      "Warm ivory reading canvas with restrained, functional teal emphasis.",
+      "Visible progress steps, with orange reserved for the current step.",
+      "Bilingual Noto Sans / Noto Nastaliq Urdu typography and true RTL flow.",
+      "Safe, fictional practice screens with plain-language guidance and recoverable states."
+    ],
+    "rules": [
+      {
+        "name": "The Workbook Accent Rule",
+        "body": "Teal carries the action and the learning structure; orange marks the current step only. Keep the two roles distinct.",
+        "section": "colors"
+      },
+      {
+        "name": "The Urdu Line-Breath Rule",
+        "body": "Urdu content uses the Noto Nastaliq Urdu stack, 2 line-height for general content, and 1.9 for headings, buttons, and selects. Preserve enough vertical space for the script's descending forms.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Lift Rule",
+        "body": "Reserve the soft shadow for the hero illustration; use paper, sage, and fine dividers to distinguish routine learning surfaces.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the documented warm-ivory, deep-teal, soft-sage, warm-orange, charcoal, and white palette for their established roles.",
+      "Do keep primary learning actions at least 44px high; the canonical primary button is 58px high.",
+      "Do show step number or completion mark as well as color, and keep the active step visibly outlined.",
+      "Do use Noto Nastaliq Urdu with the documented taller line-height and true RTL direction for Urdu.",
+      "Do use plain, reassuring feedback and label simulated phone actions as practice."
+    ],
+    "donts": [
+      "Don't compress the interface into dense dashboard rows or small-print instructions.",
+      "Don't use orange as a second competing primary-action color.",
+      "Don't indicate progress, permission state, or errors by color alone.",
+      "Don't present fictional practice as a real call, real contact list, or real camera/microphone permission prompt.",
+      "Don't flatten Nastaliq line-height to the Latin rhythm."
+    ]
+  }
+}
