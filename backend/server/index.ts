@@ -1,7 +1,9 @@
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import express from 'express'
-import { isLearnerState } from '../shared/learner-state.js'
+import { normalizeLearnerState } from '../shared/learner-state.js'
+import { interactiveLessons } from '../shared/interactive-lessons.js'
+import { lessonSteps } from '../shared/lesson-steps.js'
 import {
   AssistantServiceError,
   getGroqConfig,
@@ -60,13 +62,26 @@ app.post('/api/assistant/chat', createRateLimit(8, 60_000), async (request, resp
 
 app.get('/api/speech/ur/:step', async (request, response) => {
   const step = Number(request.params.step)
-  if (!Number.isInteger(step) || step < 0 || step > 5) {
+  const requestedLesson = request.query.lesson
+  const lessonId =
+    requestedLesson === 'scam-detective' || requestedLesson === 'utility-bill'
+      ? requestedLesson
+      : requestedLesson === undefined
+        ? 'video-call'
+        : null
+  const stepCount =
+    lessonId === null
+      ? 0
+      : lessonId === 'video-call'
+        ? lessonSteps.ur.length
+        : interactiveLessons.ur[lessonId].steps.length
+  if (lessonId === null || !Number.isInteger(step) || step < 0 || step >= stepCount) {
     response.status(400).json({ error: 'Choose a valid Urdu lesson step.' })
     return
   }
 
   try {
-    const audio = await getUrduSpeechAudio(step)
+    const audio = await getUrduSpeechAudio(step, undefined, lessonId)
     response
       .status(200)
       .set('Cache-Control', 'private, max-age=86400')
@@ -107,8 +122,8 @@ app.get('/api/progress', (_request, response) => {
 })
 
 app.put('/api/progress', async (request, response) => {
-  const state: unknown = request.body
-  if (!isLearnerState(state)) {
+  const state = normalizeLearnerState(request.body)
+  if (!state) {
     response.status(400).json({
       error: 'Progress must include a supported language, lesson step, rating, and accessibility settings.',
     })

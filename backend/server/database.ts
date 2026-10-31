@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import initSqlJs, { type Database } from 'sql.js'
 import {
   DEFAULT_LEARNER_STATE,
-  isLearnerState,
+  normalizeLearnerState,
   type LearnerState,
 } from '../shared/learner-state.js'
 
@@ -49,8 +49,15 @@ export async function createLearnerDatabase() {
     throw new Error('The saved learner state is not valid text.')
   } else {
     const savedState: unknown = JSON.parse(rows[0].values[0][0])
-    if (!isLearnerState(savedState)) {
+    const migratedState = normalizeLearnerState(savedState)
+    if (!migratedState) {
       throw new Error('The saved learner state has an unsupported format.')
+    }
+    if (!('lessonProgress' in (savedState as object))) {
+      database.run('UPDATE learner_state SET state_json = ? WHERE id = 1', [
+        JSON.stringify(migratedState),
+      ])
+      await persist(database)
     }
   }
 
@@ -62,10 +69,11 @@ export async function createLearnerDatabase() {
     }
 
     const state: unknown = JSON.parse(value)
-    if (!isLearnerState(state)) {
+    const normalized = normalizeLearnerState(state)
+    if (!normalized) {
       throw new Error('The saved learner state has an unsupported format.')
     }
-    return state
+    return normalized
   }
 
   async function saveState(state: LearnerState): Promise<LearnerState> {

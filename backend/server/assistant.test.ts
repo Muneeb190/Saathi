@@ -84,9 +84,49 @@ test('gives exact home-page navigation and simulation context to Groq', async ()
     fetcher,
   )
 
-  assert.match(systemPrompt, /“Get started” \(opens My learning\)/)
-  assert.match(systemPrompt, /“Try a practice lesson” \(opens the video-call lesson introduction\)/)
-  assert.match(systemPrompt, /do not tell the learner to open a real video-calling app/)
+  assert.match(systemPrompt, /“Get started” opens My learning/)
+  assert.match(systemPrompt, /“Try a practice lesson” opens the video-call lesson/)
+  assert.match(systemPrompt, /“Scam Detective” and “Pay Your Utility Bill Safely”/)
+  assert.match(systemPrompt, /never tell the learner Saathi can make a real call/i)
+  assert.match(systemPrompt, /No lesson-specific step is active/)
+})
+
+test('gives scam and utility-bill safety context for the active lesson', async () => {
+  const prompts: string[] = []
+  const fetcher: typeof fetch = async (_input, init) => {
+    const body = JSON.parse(String(init?.body)) as {
+      messages: Array<{ role: string; content: string }>
+    }
+    prompts.push(body.messages[0].content)
+    return Response.json({ choices: [{ message: { content: 'Pause and check safely.' } }] })
+  }
+
+  assert.equal(isAssistantRequest({
+    ...request,
+    route: '/practice/scam-detective',
+    lessonStep: 2,
+  }), true)
+  assert.equal(isAssistantRequest({
+    ...request,
+    route: '/practice/scam-detective',
+    lessonStep: 6,
+  }), false)
+  await getAssistantReply(
+    { ...request, route: '/practice/scam-detective', lessonStep: 2 },
+    { GROQ_API_KEY: 'test-key' },
+    fetcher,
+  )
+  await getAssistantReply(
+    { ...request, route: '/practice/utility-bill', lessonStep: 4 },
+    { GROQ_API_KEY: 'test-key' },
+    fetcher,
+  )
+
+  assert.match(prompts[0], /never sharing OTPs or passwords/)
+  assert.match(prompts[0], /Current lesson step: 3 of 5/)
+  assert.match(prompts[1], /all displayed bill details are fictional/)
+  assert.match(prompts[1], /never ask the learner to enter financial information/i)
+  assert.match(prompts[1], /Current lesson step: 5 of 6/)
 })
 
 test('uses the selected language and step when composing Urdu context', async () => {

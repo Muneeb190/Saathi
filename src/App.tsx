@@ -29,9 +29,19 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import { useEffect, useState, type ReactNode } from 'react'
-import type { Language } from '../shared/learner-state'
+import {
+  getInteractiveLessonProgress,
+  type Language,
+} from '../shared/learner-state'
+import { interactiveLessonIds, interactiveLessons } from '../shared/interactive-lessons'
 import { AssistantWidget } from './AssistantWidget'
 import { getCopy, lessonSteps } from './content'
+import {
+  InteractiveLessonCards,
+  InteractiveLessonCompletion,
+  InteractiveLessonIntro,
+  InteractiveLessonPractice,
+} from './InteractiveLessons'
 import { LearnerProvider } from './LearnerProvider'
 import { useLearner } from './learner-context'
 import { SimulationPhone } from './SimulationPhone'
@@ -98,6 +108,12 @@ function AppLayout() {
           <Route path="/lesson/video-call" element={<LessonPage />} />
           <Route path="/practice/video-call" element={<PracticePage />} />
           <Route path="/complete/video-call" element={<CompletionPage />} />
+          <Route path="/lesson/scam-detective" element={<InteractiveLessonIntro lessonId="scam-detective" />} />
+          <Route path="/practice/scam-detective" element={<InteractiveLessonPractice lessonId="scam-detective" />} />
+          <Route path="/complete/scam-detective" element={<InteractiveLessonCompletion lessonId="scam-detective" />} />
+          <Route path="/lesson/utility-bill" element={<InteractiveLessonIntro lessonId="utility-bill" />} />
+          <Route path="/practice/utility-bill" element={<InteractiveLessonPractice lessonId="utility-bill" />} />
+          <Route path="/complete/utility-bill" element={<InteractiveLessonCompletion lessonId="utility-bill" />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -301,6 +317,14 @@ function LandingPage() {
         <Benefit icon={<Heart />} title={t.benefitIndependent} description={t.benefitIndependentDescription} />
       </section>
 
+      <section className="additional-lessons" aria-labelledby="home-lessons-heading">
+        <div className="additional-lessons-heading">
+          <h2 id="home-lessons-heading">{t.additionalLessons}</h2>
+          <p>{t.additionalLessonsDescription}</p>
+        </div>
+        <InteractiveLessonCards />
+      </section>
+
       <section className="safe-promise">
         <span className="safe-icon"><LockKeyhole size={23} aria-hidden="true" /></span>
         <div><h2>{t.safePractice}</h2><p>{t.safePromise}</p></div>
@@ -361,6 +385,12 @@ function DashboardPage() {
   const t = getCopy(state.language)
   const navigate = useNavigate()
   const step = Math.min(state.lessonStep, 5)
+  const completedLessonNames = [
+    ...(state.completed ? [t.familyCall] : []),
+    ...interactiveLessonIds
+      .filter((lessonId) => getInteractiveLessonProgress(state, lessonId).completed)
+      .map((lessonId) => interactiveLessons[state.language][lessonId].title),
+  ]
 
   async function continueLearning() {
     if (state.lessonStep === 6) await update({ lessonStep: 0 })
@@ -406,8 +436,10 @@ function DashboardPage() {
           <section className="small-progress">
             <span className="side-icon"><CheckCircle2 size={22} aria-hidden="true" /></span>
             <h2>{t.completedLessons}</h2>
-            {state.completed ? (
-              <p>{t.familyCall}<br /><strong>{t.confidenceSaved}</strong></p>
+            {completedLessonNames.length > 0 ? (
+              <ul className="completed-lesson-names">
+                {completedLessonNames.map((name) => <li key={name}>{name}</li>)}
+              </ul>
             ) : (
               <p>{t.noCompletedLessons}</p>
             )}
@@ -418,6 +450,14 @@ function DashboardPage() {
             <p>{t.achievementDescription}</p>
           </section>
         </aside>
+      </section>
+
+      <section className="additional-lessons" aria-labelledby="dashboard-lessons-heading">
+        <div className="additional-lessons-heading">
+          <h2 id="dashboard-lessons-heading">{t.additionalLessons}</h2>
+          <p>{t.additionalLessonsDescription}</p>
+        </div>
+        <InteractiveLessonCards />
       </section>
 
       <FamilySupport />

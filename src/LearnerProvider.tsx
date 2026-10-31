@@ -7,7 +7,7 @@ import {
 } from 'react'
 import {
   DEFAULT_LEARNER_STATE,
-  isLearnerState,
+  normalizeLearnerState,
   type LearnerState,
 } from '../shared/learner-state'
 import { fetchLearnerState, saveLearnerState } from './api'
@@ -50,12 +50,13 @@ export function LearnerProvider({ children }: { children: ReactNode }) {
         const cached = window.localStorage.getItem(CACHE_KEY)
         if (cached) {
           const parsed: unknown = JSON.parse(cached)
-          if (!isLearnerState(parsed)) {
+          const normalized = normalizeLearnerState(parsed)
+          if (!normalized) {
             throw new Error('Saved browser preferences use an unsupported format.')
           }
           if (active) {
-            stateRef.current = parsed
-            setState(parsed)
+            stateRef.current = normalized
+            setState(normalized)
           }
         }
       } catch {

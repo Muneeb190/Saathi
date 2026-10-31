@@ -21,7 +21,11 @@ import type {
   AppRoute,
   AssistantHistoryMessage,
 } from '../shared/assistant'
-import type { Language } from '../shared/learner-state'
+import {
+  getInteractiveLessonProgress,
+  type InteractiveLessonId,
+  type Language,
+} from '../shared/learner-state'
 import {
   AssistantApiError,
   fetchAssistantAvailability,
@@ -81,7 +85,7 @@ const copy = {
     title: 'Ask Saathi',
     subtitle: 'A little help, right where you are.',
     welcome:
-      'Hello! I can help with this page or the video-call lesson. What would you like to know?',
+      'Hello! I can guide you through Saathi’s lessons and help with the step you are practising. What would you like to know?',
     currentPage: 'What can I do here?',
     currentStep: 'Help me with this step',
     placeholder: 'Type a question…',
@@ -113,7 +117,7 @@ const copy = {
     title: 'ساتھی سے پوچھیں',
     subtitle: 'آپ جہاں ہیں، وہیں تھوڑی سی مدد۔',
     welcome:
-      'السلام علیکم! میں اس صفحے یا ویڈیو کال کے سبق میں مدد کر سکتا ہوں۔ آپ کیا جاننا چاہتے ہیں؟',
+      'السلام علیکم! میں ساتھی کے اسباق اور موجودہ مشق کے قدم میں آپ کی رہنمائی کر سکتا ہوں۔ آپ کیا جاننا چاہتے ہیں؟',
     currentPage: 'میں یہاں کیا کر سکتا ہوں؟',
     currentStep: 'اس قدم میں میری مدد کریں',
     placeholder: 'اپنا سوال لکھیں…',
@@ -148,6 +152,12 @@ function getAppRoute(pathname: string): AppRoute {
     case '/lesson/video-call':
     case '/practice/video-call':
     case '/complete/video-call':
+    case '/lesson/scam-detective':
+    case '/practice/scam-detective':
+    case '/complete/scam-detective':
+    case '/lesson/utility-bill':
+    case '/practice/utility-bill':
+    case '/complete/utility-bill':
       return pathname
     default:
       return '/'
@@ -179,6 +189,15 @@ export function AssistantWidget() {
   const speechRequestId = useRef(0)
   const nextMessageId = useRef(0)
   const route = getAppRoute(pathname)
+  const interactiveLessonId: InteractiveLessonId | null =
+    route.endsWith('scam-detective')
+      ? 'scam-detective'
+      : route.endsWith('utility-bill')
+        ? 'utility-bill'
+        : null
+  const lessonStep = interactiveLessonId
+    ? getInteractiveLessonProgress(state, interactiveLessonId).step
+    : state.lessonStep
   const SpeechRecognition =
     typeof window === 'undefined'
       ? undefined
@@ -361,7 +380,7 @@ export function AssistantWidget() {
         message: userMessage.content,
         language,
         route,
-        lessonStep: state.lessonStep,
+        lessonStep,
         history,
       })
       setMessages((current) => [

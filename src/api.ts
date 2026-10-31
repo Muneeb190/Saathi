@@ -1,4 +1,4 @@
-import { isLearnerState, type LearnerState } from '../shared/learner-state'
+import { normalizeLearnerState, type LearnerState } from '../shared/learner-state'
 import type { AssistantRequest } from '../shared/assistant'
 
 export class AssistantApiError extends Error {
@@ -20,10 +20,11 @@ async function readState(response: Response): Promise<LearnerState> {
   }
 
   const value: unknown = await response.json()
-  if (!isLearnerState(value)) {
+  const state = normalizeLearnerState(value)
+  if (!state) {
     throw new Error('Progress service returned an unsupported state.')
   }
-  return value
+  return state
 }
 
 export async function fetchLearnerState(): Promise<LearnerState> {

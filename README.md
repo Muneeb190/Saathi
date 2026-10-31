@@ -1,6 +1,14 @@
 ﻿# Saathi
 
-Saathi is a bilingual, mobile-first learning companion. Its first lesson teaches people to join and safely end a family video call in a clearly labelled simulation. The simulation never places a real call or accesses real contacts, a camera, or a microphone. The optional voice assistant asks the browser to transcribe speech only after the learner taps its microphone button.
+Saathi is a bilingual, mobile-first learning companion. Its lessons teach people to join a family video call safely, recognize suspicious messages, and review a utility bill before payment. Every interactive exercise is a clearly labelled simulation.
+
+## Lessons
+
+- **Video call:** practise with sample contacts and simulated call controls. No real call, contacts, camera, or microphone are used.
+- **Scam Detective:** review fictional WhatsApp-style messages, prize notices, bank alerts, suspicious links, and OTP requests. Choose a safe response and try again after a mistake.
+- **Pay Your Utility Bill Safely:** read an invented Pakistan-style sample bill and practise checking the consumer/reference number, due date, and total amount. Sample values are fictional; Saathi never collects financial details or processes a payment.
+
+Progress for each lesson is saved separately. Older saved learner progress is migrated when the app loads.
 
 ## Run locally
 
@@ -21,7 +29,7 @@ npm start
 
 ## Voice guidance
 
-English guidance uses the browser's installed English speech voice. Urdu Listen and Repeat controls and spoken assistant replies use Microsoft Edge's online Read Aloud service with its `ur-IN-GulNeural` voice. This does not require an Azure Speech resource, account, or key, and does not depend on an Urdu voice being installed on the learner's device.
+English guidance uses the browser's installed English speech voice. Urdu lesson instructions and spoken assistant replies use Microsoft Edge's online Read Aloud service with its `ur-IN-GulNeural` voice. This does not require an Azure Speech resource, account, or key, and does not depend on an Urdu voice being installed on the learner's device.
 
 Urdu playback requires an internet connection. The selected fixed lesson instruction, or an assistant reply only when you choose to read it aloud, is sent to Microsoft's online speech service. This uses the Edge Read Aloud service through the community `node-edge-tts` client, not a supported Azure Speech API, so availability and terms may change. No speech-service credentials or payment setup are required.
 

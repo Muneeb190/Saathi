@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { Language } from '../shared/learner-state'
+import type { InteractiveLessonId, Language } from '../shared/learner-state'
 import { fetchUrduSpeechAvailability } from './api'
 import { findSpeechVoice } from './speech'
 
@@ -88,7 +88,7 @@ export function useSpeech(language: Language) {
   )
 
   const speak = useCallback(
-    (text: string, lessonStep?: number) => {
+    (text: string, lessonStep?: number, lessonId?: InteractiveLessonId | 'video-call') => {
       activeUtterance.current = null
       synthesis?.cancel()
       activeAudio.current?.pause()
@@ -98,7 +98,10 @@ export function useSpeech(language: Language) {
         if (urduServiceStatus !== 'available' || lessonStep === undefined) return
 
         setPlayback({ language, speaking: false, paused: false, loading: true, failed: false })
-        const audio = new Audio(`/api/speech/ur/${lessonStep}`)
+        const selectedLesson = lessonId ?? 'video-call'
+        const audio = new Audio(
+          `/api/speech/ur/${lessonStep}?lesson=${encodeURIComponent(selectedLesson)}`,
+        )
         activeAudio.current = audio
         audio.preload = 'auto'
         audio.onplaying = () => {

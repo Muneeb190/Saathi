@@ -1,9 +1,12 @@
 import { EdgeTTS } from 'node-edge-tts'
+import { interactiveLessons } from '../shared/interactive-lessons.js'
 import { lessonSteps } from '../shared/lesson-steps.js'
+import type { InteractiveLessonId } from '../shared/learner-state.js'
 
 const voiceName = 'ur-IN-GulNeural'
-const audioCache = new Map<number, Buffer>()
-const pendingAudio = new Map<number, Promise<Buffer>>()
+const audioCache = new Map<string, Buffer>()
+const pendingAudio = new Map<string, Promise<Buffer>>()
+type LessonId = InteractiveLessonId | 'video-call'
 
 type EdgeSpeechClient = Pick<EdgeTTS, 'streamAudio'>
 type EdgeSpeechFactory = () => EdgeSpeechClient
@@ -20,14 +23,19 @@ function createEdgeSpeechClient(): EdgeSpeechClient {
 async function requestUrduSpeech(
   step: number,
   createClient: EdgeSpeechFactory,
+  lessonId: LessonId,
 ): Promise<Buffer> {
-  if (!Number.isInteger(step) || step < 0 || step >= lessonSteps.ur.length) {
+  const steps =
+    lessonId === 'video-call'
+      ? lessonSteps.ur
+      : interactiveLessons.ur[lessonId].steps
+  if (!Number.isInteger(step) || step < 0 || step >= steps.length) {
     throw new RangeError('The requested Urdu lesson step does not exist.')
   }
 
   const client = createClient()
   const chunks: Buffer[] = []
-  for await (const chunk of client.streamAudio(lessonSteps.ur[step].instruction)) {
+  for await (const chunk of client.streamAudio(steps[step].instruction)) {
     if (!Buffer.isBuffer(chunk)) {
       throw new Error('Edge TTS returned unexpected subtitle metadata.')
     }
@@ -42,27 +50,33 @@ async function requestUrduSpeech(
 export function getUrduSpeechAudio(
   step: number,
   createClient: EdgeSpeechFactory = createEdgeSpeechClient,
+  lessonId: LessonId = 'video-call',
 ): Promise<Buffer> {
-  if (!Number.isInteger(step) || step < 0 || step >= lessonSteps.ur.length) {
+  const steps =
+    lessonId === 'video-call'
+      ? lessonSteps.ur
+      : interactiveLessons.ur[lessonId].steps
+  if (!Number.isInteger(step) || step < 0 || step >= steps.length) {
     return Promise.reject(new RangeError('The requested Urdu lesson step does not exist.'))
   }
 
-  const cached = audioCache.get(step)
+  const cacheKey = `${lessonId}:${step}`
+  const cached = audioCache.get(cacheKey)
   if (cached) return Promise.resolve(cached)
 
-  const pending = pendingAudio.get(step)
+  const pending = pendingAudio.get(cacheKey)
   if (pending) return pending
 
-  const request = requestUrduSpeech(step, createClient)
-  pendingAudio.set(step, request)
+  const request = requestUrduSpeech(step, createClient, lessonId)
+  pendingAudio.set(cacheKey, request)
   return request.then(
     (audio) => {
-      audioCache.set(step, audio)
-      pendingAudio.delete(step)
+      audioCache.set(cacheKey, audio)
+      pendingAudio.delete(cacheKey)
       return audio
     },
     (error: unknown) => {
-      pendingAudio.delete(step)
+      pendingAudio.delete(cacheKey)
       throw error
     },
   )

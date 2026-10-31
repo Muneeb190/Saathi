@@ -24,13 +24,15 @@ Saathi teaches rather than taking over. Its Confidence Loop moves through unders
 
 ## Operating Context
 
-The MVP is a mobile-first learning experience for someone practising on a smartphone, with an optional family member helping them learn. The first complete lesson teaches joining and safely ending a family video call.
+The mobile-first learning experience lets someone practise smartphone skills at their own pace, with an optional family member helping them learn. Lessons cover joining a family video call, identifying suspicious messages, and safely understanding a Pakistani-style utility bill.
 
 ## Capabilities and Constraints
 
-- The video-call lesson simulates opening a calling app, selecting a sample family contact, recognizing the call control, responding to camera and microphone permission prompts, joining, and ending a practice call.
+- The video-call lesson simulates selecting a sample family contact, recognizing call controls, responding to simulated permissions, and ending a practice call.
+- Scam Detective uses clearly fictional WhatsApp-style, prize, bank-alert, phishing-link, and OTP scenarios. Learners choose safe responses and can recover from mistakes.
+- Utility-bill practice teaches consumer/reference numbers, due dates, amounts, and verification using fictional sample values only. It never collects financial information or processes a payment.
 - Simulation is clearly identified as practice. It must not place calls, connect to WhatsApp, use real contacts, or access a real camera or microphone. Optional assistant dictation may use browser speech recognition only after an explicit user action; Saathi must not store audio.
-- Instructions support English and Urdu, with proper right-to-left layout in Urdu. Voice guidance uses browser speech synthesis when available and is never required.
+- Instructions support English and Urdu, with proper right-to-left layout in Urdu. English voice guidance uses browser speech synthesis; Urdu lesson instructions use the online Edge Read Aloud service. Voice guidance is optional and text remains available.
 - A global bilingual help assistant can use the current app page and lesson step to offer guidance. Groq access is optional and requires a server-side key; provider usage is subject to account limits, billing, and data terms. Chat must not control the learner's device or request private details.
 - Persist selected language, lesson progress/completion, confidence ratings, and accessibility preferences. The confirmed backend is Node/Express with SQLite.
 - No registration or real-world messaging. Keep hosted AI optional, disclose provider data handling, and avoid unnecessary infrastructure.

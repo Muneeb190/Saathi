@@ -6,6 +6,12 @@ export type AppRoute =
   | '/lesson/video-call'
   | '/practice/video-call'
   | '/complete/video-call'
+  | '/lesson/scam-detective'
+  | '/practice/scam-detective'
+  | '/complete/scam-detective'
+  | '/lesson/utility-bill'
+  | '/practice/utility-bill'
+  | '/complete/utility-bill'
 
 export interface AssistantHistoryMessage {
   role: 'user' | 'assistant'

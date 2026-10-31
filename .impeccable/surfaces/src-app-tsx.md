@@ -7,13 +7,13 @@ related_targets: []
 
 # Saathi learner application
 
-Scope: mobile-first learner landing, dashboard, lesson introduction, simulated practice, completion, and family-support flow.
+Scope: mobile-first learner landing, dashboard, bilingual lesson introductions, simulated practice and completion for video calls, scam detection, and utility-bill safety, plus family support.
 
 Visitor mode: Operate.
 
-Audience and task: Urdu-preferring adults who want to learn how to join a family video call without risking a real call. The experience must teach the action, not perform it.
+Audience and task: Urdu-preferring adults who want to practise joining a family video call, spotting scams, and checking utility bills without making a real call, sharing a secret code, or sending money. The experience must teach the action, not perform it.
 
-Proof and content: Six interactive practice steps; clear progress, gentle recovery, hints, spoken/text instructions, safe-practice promise, real-world checklist, and saved confidence rating. All contacts and call controls are fictional.
+Proof and content: Six interactive video-call steps; five fictional scam decisions; six utility-bill safety decisions; clear per-lesson progress, gentle recovery, hints, spoken/text instructions, and visible simulation boundaries. Sample contacts, messages, biller, consumer/reference numbers, and amounts are fictional. No real calls, OTP sharing, financial-data collection, or payments.
 
 Constraints: English and Urdu with RTL; large readable type and touch targets; React/TypeScript/Tailwind/Lucide; Node/Express and SQLite; no registration, real calls, or private contact access.
 
