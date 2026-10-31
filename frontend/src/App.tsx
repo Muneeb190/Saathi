@@ -32,8 +32,8 @@ import { useEffect, useState, type ReactNode } from 'react'
 import {
   getInteractiveLessonProgress,
   type Language,
-} from '../shared/learner-state'
-import { interactiveLessonIds, interactiveLessons } from '../shared/interactive-lessons'
+} from '../../shared/learner-state'
+import { interactiveLessonIds, interactiveLessons } from '../../shared/interactive-lessons'
 import { AssistantWidget } from './AssistantWidget'
 import { getCopy, lessonSteps } from './content'
 import {

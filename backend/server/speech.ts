@@ -1,7 +1,7 @@
 import { EdgeTTS } from 'node-edge-tts'
-import { interactiveLessons } from '../shared/interactive-lessons.js'
-import { lessonSteps } from '../shared/lesson-steps.js'
-import type { InteractiveLessonId } from '../shared/learner-state.js'
+import { interactiveLessons } from '../../shared/interactive-lessons.js'
+import { lessonSteps } from '../../shared/lesson-steps.js'
+import type { InteractiveLessonId } from '../../shared/learner-state.js'
 
 const voiceName = 'ur-IN-GulNeural'
 const audioCache = new Map<string, Buffer>()

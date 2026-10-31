@@ -1,4 +1,4 @@
-import type { Language } from '../shared/learner-state'
+import type { Language } from '../../shared/learner-state'
 
 export function findSpeechVoice(
   voices: SpeechSynthesisVoice[],

@@ -1,5 +1,5 @@
-import type { Language } from '../shared/learner-state'
-export { lessonSteps } from '../shared/lesson-steps'
+import type { Language } from '../../shared/learner-state'
+export { lessonSteps } from '../../shared/lesson-steps'
 
 export const copy = {
   en: {

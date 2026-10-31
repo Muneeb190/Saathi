@@ -1,5 +1,11 @@
-import { normalizeLearnerState, type LearnerState } from '../shared/learner-state'
-import type { AssistantRequest } from '../shared/assistant'
+import { normalizeLearnerState, type LearnerState } from '../../shared/learner-state'
+import type { AssistantRequest } from '../../shared/assistant'
+
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')
+
+export function getApiUrl(path: string): string {
+  return `${apiBaseUrl}${path}`
+}
 
 export class AssistantApiError extends Error {
   readonly status: number
@@ -28,12 +34,12 @@ async function readState(response: Response): Promise<LearnerState> {
 }
 
 export async function fetchLearnerState(): Promise<LearnerState> {
-  const response = await fetch('/api/progress')
+  const response = await fetch(getApiUrl('/api/progress'))
   return readState(response)
 }
 
 export async function saveLearnerState(state: LearnerState): Promise<LearnerState> {
-  const response = await fetch('/api/progress', {
+  const response = await fetch(getApiUrl('/api/progress'), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(state),
@@ -42,7 +48,7 @@ export async function saveLearnerState(state: LearnerState): Promise<LearnerStat
 }
 
 export async function fetchUrduSpeechAvailability(): Promise<boolean> {
-  const response = await fetch('/api/speech/status')
+  const response = await fetch(getApiUrl('/api/speech/status'))
   if (!response.ok) {
     throw new Error(`Urdu speech service returned ${response.status}.`)
   }
@@ -61,7 +67,7 @@ export async function fetchUrduSpeechAvailability(): Promise<boolean> {
 }
 
 export async function fetchAssistantAvailability(): Promise<boolean> {
-  const response = await fetch('/api/assistant/status')
+  const response = await fetch(getApiUrl('/api/assistant/status'))
   if (!response.ok) {
     throw new Error(`Assistant service returned ${response.status}.`)
   }
@@ -81,7 +87,7 @@ export async function fetchAssistantAvailability(): Promise<boolean> {
 export async function sendAssistantMessage(
   request: AssistantRequest,
 ): Promise<string> {
-  const response = await fetch('/api/assistant/chat', {
+  const response = await fetch(getApiUrl('/api/assistant/chat'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(request),
@@ -107,7 +113,7 @@ export async function sendAssistantMessage(
 }
 
 export async function fetchAssistantSpeech(text: string): Promise<Blob> {
-  const response = await fetch('/api/speech/assistant', {
+  const response = await fetch(getApiUrl('/api/speech/assistant'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text }),

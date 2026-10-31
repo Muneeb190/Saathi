@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { LearnerState } from '../shared/learner-state'
+import type { LearnerState } from '../../shared/learner-state'
 
 export interface LearnerContextValue {
   state: LearnerState

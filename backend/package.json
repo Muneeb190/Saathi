@@ -1,0 +1,23 @@
+{
+  "name": "saathi-backend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env --import tsx --watch server/index.ts",
+    "build": "tsc --noEmit -p tsconfig.server.json",
+    "start": "node --env-file=.env --import tsx server/index.ts"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "node-edge-tts": "^1.2.12",
+    "sql.js": "^1.15.2",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.19.2",
+    "@types/sql.js": "^1.4.11",
+    "typescript": "~7.0.2"
+  }
+}

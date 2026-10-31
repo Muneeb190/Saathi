@@ -1,12 +1,16 @@
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { dirname, resolve } from 'node:path'
+import { createRequire } from 'node:module'
 import initSqlJs, { type Database } from 'sql.js'
 import {
   DEFAULT_LEARNER_STATE,
   normalizeLearnerState,
   type LearnerState,
-} from '../shared/learner-state.js'
+} from '../../shared/learner-state.js'
+
+const require = createRequire(import.meta.url)
+const sqlJsDirectory = dirname(require.resolve('sql.js'))
 
 const dataDirectory = resolve(process.env.SAATHI_DATA_DIR ?? 'data')
 const databasePath = resolve(dataDirectory, 'saathi.sqlite')
@@ -27,8 +31,7 @@ export async function createLearnerDatabase() {
   }
 
   const SQL = await initSqlJs({
-    locateFile: (fileName) =>
-      resolve(process.cwd(), 'node_modules', 'sql.js', 'dist', fileName),
+    locateFile: (fileName) => resolve(sqlJsDirectory, fileName),
   })
 
   const existingBytes = existsSync(databasePath)

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { InteractiveLessonId, Language } from '../shared/learner-state'
-import { fetchUrduSpeechAvailability } from './api'
+import type { InteractiveLessonId, Language } from '../../shared/learner-state'
+import { fetchUrduSpeechAvailability, getApiUrl } from './api'
 import { findSpeechVoice } from './speech'
 
 interface PlaybackState {
@@ -100,7 +100,7 @@ export function useSpeech(language: Language) {
         setPlayback({ language, speaking: false, paused: false, loading: true, failed: false })
         const selectedLesson = lessonId ?? 'video-call'
         const audio = new Audio(
-          `/api/speech/ur/${lessonStep}?lesson=${encodeURIComponent(selectedLesson)}`,
+          getApiUrl(`/api/speech/ur/${lessonStep}?lesson=${encodeURIComponent(selectedLesson)}`),
         )
         activeAudio.current = audio
         audio.preload = 'auto'

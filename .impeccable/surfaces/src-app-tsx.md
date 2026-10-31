@@ -1,7 +1,7 @@
 ---
 version: 1
 slug: "src-app-tsx"
-primary_target: "src/App.tsx"
+primary_target: "frontend/src/App.tsx"
 related_targets: []
 ---
 

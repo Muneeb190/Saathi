@@ -13,9 +13,9 @@ import {
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import type { InteractiveLessonId, Language } from '../shared/learner-state'
-import { getInteractiveLessonProgress } from '../shared/learner-state'
-import { interactiveLessonIds, interactiveLessons } from '../shared/interactive-lessons'
+import type { InteractiveLessonId, Language } from '../../shared/learner-state'
+import { getInteractiveLessonProgress } from '../../shared/learner-state'
+import { interactiveLessonIds, interactiveLessons } from '../../shared/interactive-lessons'
 import { useLearner } from './learner-context'
 import { useSpeech } from './useSpeech'
 

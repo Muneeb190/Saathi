@@ -17,15 +17,24 @@ npm install
 npm run dev
 ```
 
-The development command starts the Vite app and the Express API together. Open the local URL printed by Vite.
+The development command starts the Vite app and the Express API together. Open the local URL printed by Vite. The browser app is in `frontend/`, the API service is in `backend/`, and their shared lesson data and types are in `shared/`.
 
 ```sh
 npm test
 npm run build
-npm start
 ```
 
-`npm start` serves the production build and the API from Express after `npm run build`.
+## Deploy frontend and backend separately
+
+Deploy the repository as two projects/services. Each app folder has its own `package.json`; keep the repository root as the build context so both projects can access `shared/`.
+
+For Vercel, import the repository with its root directory set to the repository root. The root `vercel.json` installs and builds `frontend/` and publishes `frontend/dist`. Set `VITE_API_BASE_URL` in Vercel to the public backend URL (without a trailing slash); see `frontend/.env.example`.
+
+For the backend service, use the repository root as its build context and set install, build, and start commands to `npm --prefix backend install`, `npm --prefix backend run build`, and `npm --prefix backend start`. Add the variables from `backend/.env.example` to the hosting provider's environment settings. Set `FRONTEND_ORIGIN` to the exact deployed frontend origin so browsers can call the API. Keep `GROQ_API_KEY` only in the backend environment, never in frontend variables.
+
+The backend listens on the host-provided `PORT` and `0.0.0.0`, and serves API routes only. Vite proxies `/api` to the local backend during development.
+
+The current SQLite file is local to the backend and may be erased by hosts with ephemeral filesystems. Configure persistent storage or replace it with a hosted database before relying on saved progress in production. This prototype also has no accounts and stores one shared learner state; it is not suitable for multiple public users as-is.
 
 ## Voice guidance
 
@@ -46,10 +55,10 @@ $env:GROQ_MODEL = "openai/gpt-oss-20b"
 npm run dev
 ```
 
-In deployment, set `GROQ_API_KEY` as a server-side secret. Groq account limits, plan eligibility, billing, and data terms depend on your account and may change; verify them before deployment. Without the key, the assistant stays visible but explains that it is not configured.
+In deployment, set `GROQ_API_KEY` as a backend-only secret. Groq account limits, plan eligibility, billing, and data terms depend on your account and may change; verify them before deployment. Without the key, the assistant stays visible but explains that it is not configured.
 
 ## Progress storage
 
-The API stores the single prototype learner's language, lesson step, completion, confidence rating, and accessibility settings in `data/saathi.sqlite`. The browser also caches the learner state for quick display. Set `SAATHI_DATA_DIR` to use another data directory or `PORT` to change the API port.
+The API stores the single prototype learner's language, lesson step, completion, confidence rating, and accessibility settings in `data/saathi.sqlite` relative to the backend process's working directory. The browser also caches the learner state for quick display. Set `SAATHI_DATA_DIR` to use another data directory or `PORT` to change the API port.
 
 This prototype has no accounts. Do not put real contact details or other private information into it.

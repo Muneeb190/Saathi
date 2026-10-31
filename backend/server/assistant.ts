@@ -1,11 +1,11 @@
-import { lessonSteps } from '../shared/lesson-steps.js'
-import { interactiveLessons } from '../shared/interactive-lessons.js'
+import { lessonSteps } from '../../shared/lesson-steps.js'
+import { interactiveLessons } from '../../shared/interactive-lessons.js'
 import type {
   AppRoute,
   AssistantHistoryMessage,
   AssistantRequest,
-} from '../shared/assistant.js'
-import type { Language } from '../shared/learner-state.js'
+} from '../../shared/assistant.js'
+import type { Language } from '../../shared/learner-state.js'
 
 const groqEndpoint = 'https://api.groq.com/openai/v1/chat/completions'
 const defaultModel = 'openai/gpt-oss-20b'

@@ -11,7 +11,7 @@ import {
   Video,
 } from 'lucide-react'
 import { getCopy } from './content'
-import type { Language } from '../shared/learner-state'
+import type { Language } from '../../shared/learner-state'
 import type { PermissionStage, PracticeAction } from './simulation'
 
 interface SimulationPhoneProps {

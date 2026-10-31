@@ -20,12 +20,12 @@ import { useLocation } from 'react-router-dom'
 import type {
   AppRoute,
   AssistantHistoryMessage,
-} from '../shared/assistant'
+} from '../../shared/assistant'
 import {
   getInteractiveLessonProgress,
   type InteractiveLessonId,
   type Language,
-} from '../shared/learner-state'
+} from '../../shared/learner-state'
 import {
   AssistantApiError,
   fetchAssistantAvailability,

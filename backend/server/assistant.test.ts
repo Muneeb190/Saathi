@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import type { AssistantRequest } from '../shared/assistant.js'
-import { lessonSteps } from '../shared/lesson-steps.js'
+import type { AssistantRequest } from '../../shared/assistant.js'
+import { lessonSteps } from '../../shared/lesson-steps.js'
 import {
   getAssistantReply,
   getGroqConfig,

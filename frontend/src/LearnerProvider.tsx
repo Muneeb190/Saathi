@@ -9,7 +9,7 @@ import {
   DEFAULT_LEARNER_STATE,
   normalizeLearnerState,
   type LearnerState,
-} from '../shared/learner-state'
+} from '../../shared/learner-state'
 import { fetchLearnerState, saveLearnerState } from './api'
 import { LearnerContext } from './learner-context'
 const CACHE_KEY = 'saathi-learner-state'

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { lessonSteps } from '../shared/lesson-steps.js'
-import { interactiveLessonIds, interactiveLessons } from '../shared/interactive-lessons.js'
+import { lessonSteps } from '../../shared/lesson-steps.js'
+import { interactiveLessonIds, interactiveLessons } from '../../shared/interactive-lessons.js'
 import { getUrduSpeechAudio } from './speech.js'
 
 test('requests and returns audio for every fixed Urdu lesson step', async () => {
