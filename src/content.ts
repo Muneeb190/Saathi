@@ -75,11 +75,9 @@ export const copy = {
     voiceUnsupported: 'Voice guidance is not available here. You can always read the instruction.',
     voiceLanguageUnavailable:
       'This device has no voice for this language. Add a matching text-to-speech voice in device settings, then try again. You can read the instruction below.',
-    voiceLoading: 'Checking the Urdu voice service…',
-    hostedVoiceSetup:
-      'To enable Urdu audio, configure the Azure Speech key and region on the server, then restart it. You can read the instruction below meanwhile.',
+    voiceLoading: 'Connecting to the online Urdu voice…',
     voiceServiceUnavailable:
-      'The Urdu voice service could not be reached. Check the server connection, then try again.',
+      'The online Urdu voice service could not be reached. Check your internet connection, then try again.',
     voiceFailed: 'The voice instruction could not be played. Please read the text below.',
     restart: 'Start over',
     restartConfirm: 'Start this practice lesson over from the first step?',
@@ -233,11 +231,9 @@ export const copy = {
     stopVoice: 'آواز بند کریں',
     voiceUnsupported: 'یہاں آواز کی ہدایت دستیاب نہیں۔ آپ ہدایت پڑھ سکتے ہیں۔',
     voiceLanguageUnavailable: 'اس آلے میں اس زبان کی آواز دستیاب نہیں۔',
-    voiceLoading: 'اردو آواز کی سروس دیکھی جا رہی ہے…',
-    hostedVoiceSetup:
-      'اردو آواز کے لیے سرور پر Azure Speech key اور region ترتیب دے کر سرور دوبارہ شروع کریں۔ فی الحال نیچے لکھی ہدایت پڑھ سکتے ہیں۔',
+    voiceLoading: 'آن لائن اردو آواز سے رابطہ ہو رہا ہے…',
     voiceServiceUnavailable:
-      'اردو آواز کی سروس سے رابطہ نہیں ہو سکا۔ سرور کا رابطہ دیکھیں، پھر دوبارہ کوشش کریں۔',
+      'آن لائن اردو آواز سے رابطہ نہیں ہو سکا۔ انٹرنیٹ دیکھیں، پھر دوبارہ کوشش کریں۔',
     voiceFailed: 'آواز کی ہدایت نہیں چل سکی۔ براہِ کرم نیچے لکھی ہدایت پڑھیں۔',
     restart: 'شروع سے کریں',
     restartConfirm: 'کیا آپ اس مشق کو پہلے قدم سے دوبارہ شروع کرنا چاہتے ہیں؟',

@@ -11,7 +11,7 @@ interface PlaybackState {
   failed: boolean
 }
 
-type UrduServiceStatus = 'loading' | 'available' | 'missing' | 'error'
+type UrduServiceStatus = 'loading' | 'available' | 'error'
 
 export function useSpeech(language: Language) {
   const synthesis =
@@ -65,7 +65,7 @@ export function useSpeech(language: Language) {
     void fetchUrduSpeechAvailability().then(
       (available) => {
         if (active) {
-          setUrduService({ language, status: available ? 'available' : 'missing' })
+          setUrduService({ language, status: available ? 'available' : 'error' })
         }
       },
       () => {

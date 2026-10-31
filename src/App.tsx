@@ -601,9 +601,6 @@ function VoiceControls({
       {speech.supported && language === 'ur' && speech.urduServiceStatus === 'loading' && (
         <span className="voice-note" role="status">{t.voiceLoading}</span>
       )}
-      {speech.supported && language === 'ur' && speech.urduServiceStatus === 'missing' && (
-        <span className="voice-note" role="status">{t.hostedVoiceSetup}</span>
-      )}
       {speech.supported && language === 'ur' && speech.urduServiceStatus === 'error' && (
         <span className="voice-note" role="status">{t.voiceServiceUnavailable}</span>
       )}

@@ -21,17 +21,9 @@ npm start
 
 ## Voice guidance
 
-English guidance uses the browser's installed English speech voice. Urdu Listen and Repeat controls use Azure Speech's `ur-IN-GulNeural` voice, so Urdu playback does not depend on an Urdu voice being installed on the learner's device.
+English guidance uses the browser's installed English speech voice. Urdu Listen and Repeat controls use Microsoft Edge's online Read Aloud service with its `ur-IN-GulNeural` voice. It does not require an Azure Speech resource, account, or key, and does not depend on an Urdu voice being installed on the learner's device.
 
-Set the Azure Speech resource key and region in the server environment before starting the app; do not put credentials in client code or commit them:
-
-```powershell
-$env:AZURE_SPEECH_KEY = "<your Azure Speech resource key>"
-$env:AZURE_SPEECH_REGION = "<your resource region>"
-npm run dev
-```
-
-In deployment, configure those as server-side secrets. The service receives only the selected, fixed Urdu lesson instruction; learner progress and personal data are not sent to Azure. Azure's current [pricing page](https://azure.microsoft.com/en-us/pricing/details/speech/) lists 500,000 neural TTS characters/month for the free F0 tier; check Microsoft's current terms and your resource tier before use.
+Urdu playback requires an internet connection. The app sends only the selected, fixed Urdu lesson instruction to Microsoft's online speech service; learner progress and personal data are not included. This uses the Edge Read Aloud service through the community `node-edge-tts` client, not a supported Azure Speech API, so availability and terms may change. No speech-service credentials or payment setup are required.
 
 ## Progress storage
 

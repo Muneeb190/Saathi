@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import express from 'express'
 import { isLearnerState } from '../shared/learner-state.js'
 import { createLearnerDatabase } from './database.js'
-import { getAzureSpeechConfig, getUrduSpeechAudio } from './speech.js'
+import { getUrduSpeechAudio } from './speech.js'
 
 const database = await createLearnerDatabase()
 const app = express()
@@ -20,7 +20,7 @@ app.get('/api/health', (_request, response) => {
 })
 
 app.get('/api/speech/status', (_request, response) => {
-  response.json({ available: getAzureSpeechConfig() !== null })
+  response.json({ available: true })
 })
 
 app.get('/api/speech/ur/:step', async (request, response) => {
@@ -30,21 +30,15 @@ app.get('/api/speech/ur/:step', async (request, response) => {
     return
   }
 
-  const config = getAzureSpeechConfig()
-  if (!config) {
-    response.status(503).json({ error: 'Urdu voice service is not configured.' })
-    return
-  }
-
   try {
-    const audio = await getUrduSpeechAudio(step, config)
+    const audio = await getUrduSpeechAudio(step)
     response
       .status(200)
       .set('Cache-Control', 'private, max-age=86400')
       .type('audio/mpeg')
       .send(audio)
   } catch (error) {
-    console.error('Azure Urdu speech request failed:', error)
+    console.error('Edge Urdu speech request failed:', error)
     response.status(502).json({
       error: 'Urdu voice playback could not be prepared. Please try again.',
     })
