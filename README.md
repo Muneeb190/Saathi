@@ -28,7 +28,7 @@ npm run build
 
 Deploy the repository as two projects/services. Each app folder has its own `package.json`; keep the repository root as the build context so both projects can access `shared/`.
 
-For Vercel, import the repository with its root directory set to the repository root. The root `vercel.json` installs and builds `frontend/` and publishes `frontend/dist`. Set `VITE_API_BASE_URL` in Vercel to the public backend URL (without a trailing slash); see `frontend/.env.example`.
+For Vercel, import the repository with **Root Directory set to `.` (the repository root)**, not `frontend/`. The frontend imports code from `shared/`, so Vercel must build with the repository root available. The root `vercel.json` runs `npm ci`, builds the frontend, and publishes `frontend/dist`. If the build log tries to install from `frontend/frontend/package.json`, the Vercel Root Directory is incorrectly set to `frontend/`. Set `VITE_API_BASE_URL` in Vercel to the public backend URL (without a trailing slash); see `frontend/.env.example`.
 
 For the backend service, use the repository root as its build context and set install, build, and start commands to `npm --prefix backend install`, `npm --prefix backend run build`, and `npm --prefix backend start`. Add the variables from `backend/.env.example` to the hosting provider's environment settings. Set `FRONTEND_ORIGIN` to the exact deployed frontend origin so browsers can call the API. Keep `GROQ_API_KEY` only in the backend environment, never in frontend variables.
 
