@@ -89,13 +89,12 @@ function AppLayout() {
                 ? t.loadFailed
               : t.localStorageProblem}
           </p>
-          {learner.saveError && (
-            <button type="button" className="text-button" onClick={learner.retrySave}>
-              {t.retrySave}
-            </button>
-          )}
-          {learner.loadError && (
-            <button type="button" className="text-button" onClick={learner.retryLoad}>
+          {(learner.saveError || learner.loadError) && (
+            <button
+              type="button"
+              className="text-button"
+              onClick={learner.saveError ? learner.retrySave : learner.retryLoad}
+            >
               {t.retrySave}
             </button>
           )}

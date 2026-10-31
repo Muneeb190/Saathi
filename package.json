@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n api,web \"npm:dev:api\" \"npm:dev:web\"",
-    "dev:api": "node --env-file=backend/.env --import tsx --watch backend/server/index.ts",
+    "dev:api": "node --env-file-if-exists=backend/.env --import tsx --watch backend/server/index.ts",
     "dev:web": "vite --config frontend/vite.config.ts",
     "build": "tsc -b && tsc --noEmit -p backend/tsconfig.server.json && vite build --config frontend/vite.config.ts",
     "build:frontend": "npm --prefix frontend run build",
     "build:backend": "npm --prefix backend run build",
     "lint": "oxlint",
     "preview": "vite preview --config frontend/vite.config.ts",
-    "start": "node --env-file=backend/.env --import tsx backend/server/index.ts",
+    "start": "node --env-file-if-exists=backend/.env --import tsx backend/server/index.ts",
     "test": "node --import tsx --test frontend/src/simulation.test.ts frontend/src/speech.test.ts backend/server/speech.test.ts backend/server/assistant.test.ts shared/interactive-lessons.test.ts shared/learner-state.test.ts"
   },
   "dependencies": {
